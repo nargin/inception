@@ -12,3 +12,12 @@ RUN		cd /var/www && tar -xzf wordpress-6.0-fr_FR.tar.gz && rm wordpress-6.0-fr_F
 RUN		chown -R root:root /var/www/wordpress
 
 COPY	./srcs/requirements/wordpress/conf/www.conf /etc/php/7.3/fpm/pool.d/www.conf
+
+COPY    ./srcs/requirements/wordpress/tools/auto_config.sh /tmp/auto_config.sh
+
+RUN     chmod +x /tmp/auto_config.sh
+
+ENTRYPOINT		["/tmp/auto_config.sh"]
+
+CMD        ["/usr/sbin/php-fpm7.3", "-F"]
+
